@@ -7,245 +7,152 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d0d0d;
-  --surface:#161616;
-  --card:#1e1e1e;
-  --border:#2a2a2a;
-  --text:#ffffff;
-  --muted:#999;
-  --gold:#f5c518;
-  --cyan:#00bcd4;
-  --pink:#e91e8c;
-}
+:root{--bg:#0d0d0d;--surface:#161616;--card:#1e1e1e;--border:#2a2a2a;--text:#fff;--muted:#999;--gold:#f5c518;--cyan:#00bcd4;--pink:#e91e8c}
 html{scroll-behavior:smooth}
 body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 ::-webkit-scrollbar{width:0;height:0}
 
 /* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:60px;
-  background:linear-gradient(to bottom,rgba(13,13,13,1) 0%,rgba(13,13,13,0) 100%);
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px;background:linear-gradient(to bottom,rgba(13,13,13,1),rgba(13,13,13,0))}
 nav.solid{background:rgba(13,13,13,.97);border-bottom:1px solid var(--border)}
-.logo{
-  font-size:1.3rem;font-weight:900;letter-spacing:-1px;
-  background:linear-gradient(90deg,var(--cyan),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s}
-.nav-links a:hover,.nav-links a.active{color:#fff}
-.nav-r{display:flex;align-items:center;gap:14px}
-.icon-btn{background:none;border:none;color:rgba(255,255,255,.65);cursor:pointer;font-size:1rem;padding:6px;transition:color .2s}
+.logo{font-size:1.2rem;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer}
+.nav-links{display:flex;gap:20px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.8rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-r{display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:.95rem;padding:5px;transition:color .2s}
 .icon-btn:hover{color:#fff}
-.avatar{
-  width:30px;height:30px;border-radius:6px;cursor:pointer;
-  background:linear-gradient(135deg,var(--cyan),var(--pink));
-  display:flex;align-items:center;justify-content:center;
-  font-size:.7rem;font-weight:800;color:#000;
-}
+.avatar{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--cyan),var(--pink));display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#000;cursor:pointer}
 
-/* HERO — 16:7 cinematic banner */
-.hero{
-  position:relative;
-  width:100%;
-  padding-top:43%; /* 16:7 ratio */
-  overflow:hidden;
-  background:#000;
-}
-.hero-img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center center;
-  transition:opacity 1s ease;
-}
-.hero-grad{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(to top, var(--bg) 0%, rgba(13,13,13,.7) 35%, transparent 65%),
-    linear-gradient(to right, rgba(13,13,13,.85) 0%, transparent 55%);
-}
-.hero-info{
-  position:absolute;bottom:0;right:0;
-  padding:28px 32px;
-  max-width:420px;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:.68rem;font-weight:700;letter-spacing:.5px;
-  color:var(--cyan);margin-bottom:10px;
-  text-transform:uppercase;
-}
-.hero-title{font-size:2rem;font-weight:900;line-height:1.1;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
-.hero-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.star{color:var(--gold);font-weight:700;font-size:.85rem}
-.yr{color:var(--muted);font-size:.8rem}
-.tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-size:.7rem;padding:2px 8px;border-radius:3px}
-.hero-desc{font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.65;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.hero-btns{display:flex;gap:10px}
-.btn-p{
-  display:flex;align-items:center;gap:6px;
-  background:var(--cyan);color:#000;
-  border:none;padding:9px 20px;border-radius:6px;
-  font-family:'Vazirmatn',sans-serif;font-size:.82rem;font-weight:700;
-  cursor:pointer;transition:opacity .2s;
-}
+/* PAGE SYSTEM */
+.page{display:none}
+.page.active{display:block}
+
+/* ═══ HOME PAGE ═══ */
+/* HERO */
+.hero{position:relative;width:100%;padding-top:42%;overflow:hidden;background:#000;min-height:200px}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;transition:opacity .8s}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(13,13,13,.6) 40%,transparent 70%),linear-gradient(to right,rgba(13,13,13,.8) 0%,transparent 55%)}
+.hero-info{position:absolute;bottom:0;right:0;padding:20px 24px;max-width:400px}
+.hero-badge{font-size:.65rem;font-weight:700;color:var(--cyan);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-size:1.7rem;font-weight:900;line-height:1.1;margin-bottom:7px;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.hero-meta{display:flex;align-items:center;gap:7px;margin-bottom:8px;flex-wrap:wrap}
+.star{color:var(--gold);font-weight:700;font-size:.82rem}
+.yr{color:var(--muted);font-size:.78rem}
+.tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-size:.67rem;padding:2px 7px;border-radius:3px}
+.hero-desc{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hero-btns{display:flex;gap:9px}
+.btn-p{display:flex;align-items:center;gap:5px;background:var(--cyan);color:#000;border:none;padding:8px 18px;border-radius:6px;font-family:'Vazirmatn',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:opacity .2s}
 .btn-p:hover{opacity:.85}
-.btn-s{
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  color:#fff;padding:9px 18px;border-radius:6px;
-  font-family:'Vazirmatn',sans-serif;font-size:.82rem;
-  cursor:pointer;transition:background .2s;
-}
+.btn-s{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:6px;font-family:'Vazirmatn',sans-serif;font-size:.78rem;cursor:pointer;transition:background .2s}
 .btn-s:hover{background:rgba(255,255,255,.18)}
-.hero-dots{
-  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
-  display:flex;gap:5px;
-}
-.dot{width:5px;height:5px;border-radius:3px;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s}
-.dot.on{width:18px;background:var(--cyan)}
-
-/* SECTIONS */
-.sec{padding:20px 24px}
-.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.sec-name{font-size:.95rem;font-weight:700;display:flex;align-items:center;gap:7px}
-.sec-name span{font-size:1rem}
-.sec-sub{font-size:.7rem;color:var(--muted);font-weight:400;margin-top:1px}
-.all-link{font-size:.75rem;color:var(--cyan);text-decoration:none;white-space:nowrap}
-.all-link:hover{text-decoration:underline}
-
-/* ROW SCROLL */
-.row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
-
-/* POSTER CARD — vertical 2:3 */
-.pc{flex:0 0 110px;cursor:pointer;transition:transform .2s}
-.pc:hover{transform:translateY(-5px)}
-.pc-wrap{position:relative;border-radius:8px;overflow:hidden}
-.pc-img{
-  width:110px;height:165px;
-  object-fit:cover;display:block;
-  background:var(--card);
-}
-.pc-ph{
-  width:110px;height:165px;
-  background:var(--card);
-  display:flex;align-items:center;justify-content:center;font-size:2rem;
-}
-.pc-ov{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 55%);
-  opacity:0;transition:opacity .2s;
-  display:flex;align-items:flex-end;padding:8px;
-}
-.pc:hover .pc-ov{opacity:1}
-.pc-play{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--cyan);display:flex;align-items:center;justify-content:center;
-  color:#000;font-size:.75rem;margin:auto;
-}
-.pc-score{
-  position:absolute;top:5px;left:5px;
-  background:rgba(0,0,0,.75);
-  color:var(--gold);font-size:.65rem;font-weight:700;
-  padding:2px 5px;border-radius:3px;
-}
-.pc-badge{
-  position:absolute;top:5px;right:5px;
-  font-size:.6rem;font-weight:700;padding:2px 5px;border-radius:3px;
-}
-.bf{background:rgba(0,188,212,.2);color:var(--cyan);border:1px solid rgba(0,188,212,.4)}
-.bt{background:rgba(233,30,140,.2);color:var(--pink);border:1px solid rgba(233,30,140,.4)}
-.pc-title{font-size:.75rem;font-weight:600;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pc-yr{font-size:.68rem;color:var(--muted);margin-top:2px}
-
-/* TOP10 — numbered poster */
-.t10{flex:0 0 100px;cursor:pointer;position:relative;padding-bottom:18px;transition:transform .2s}
-.t10:hover{transform:translateY(-5px)}
-.t10-img{
-  width:100px;height:150px;border-radius:8px;
-  object-fit:cover;display:block;background:var(--card);
-}
-.t10-ph{
-  width:100px;height:150px;border-radius:8px;
-  background:var(--card);display:flex;align-items:center;justify-content:center;font-size:1.8rem;
-}
-.t10-num{
-  position:absolute;bottom:0;right:-4px;
-  font-size:3.2rem;font-weight:900;line-height:1;
-  color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.25);
-  font-style:italic;
-}
-.t10-score{
-  position:absolute;top:5px;left:5px;
-  background:rgba(0,0,0,.75);color:var(--gold);
-  font-size:.62rem;font-weight:700;padding:2px 5px;border-radius:3px;
-}
+.hero-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
+.dot{width:4px;height:4px;border-radius:2px;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s}
+.dot.on{width:16px;background:var(--cyan)}
 
 /* STATS */
-.stats{
-  display:flex;justify-content:space-around;
-  background:var(--surface);
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:14px 20px;
-}
+.stats{display:flex;justify-content:space-around;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px}
 .st{text-align:center}
-.st-n{font-size:1rem;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.st-l{font-size:.65rem;color:var(--muted);margin-top:2px}
+.st-n{font-size:.95rem;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.st-l{font-size:.62rem;color:var(--muted);margin-top:1px}
 
-/* SEARCH */
-.s-ov{
-  position:fixed;inset:0;z-index:2000;
-  background:rgba(13,13,13,.97);
-  display:none;flex-direction:column;align-items:center;
-  padding-top:70px;gap:14px;
-}
-.s-ov.open{display:flex}
-.s-box{
-  width:92%;max-width:560px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:12px 16px;
-  display:flex;align-items:center;gap:10px;
-}
-.s-box input{
-  flex:1;background:none;border:none;outline:none;
-  color:#fff;font-family:'Vazirmatn',sans-serif;font-size:.95rem;
-}
-.s-box input::placeholder{color:var(--muted)}
-.s-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem}
-#sRes{
-  width:92%;max-width:560px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-}
+/* SECTION */
+.sec{padding:18px 16px}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sec-name{font-size:.9rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.all-link{font-size:.72rem;color:var(--cyan);text-decoration:none}
+
+/* ROW */
+.row{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
+
+/* POSTER CARD */
+.pc{flex:0 0 100px;cursor:pointer;transition:transform .2s}
+.pc:hover{transform:translateY(-4px)}
+.pc-wrap{position:relative;border-radius:7px;overflow:hidden}
+.pc-img{width:100px;height:150px;object-fit:cover;display:block;background:var(--card)}
+.pc-ph{width:100px;height:150px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.pc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9),transparent 55%);opacity:0;transition:opacity .2s;display:flex;align-items:center;justify-content:center}
+.pc:hover .pc-ov{opacity:1}
+.pc-play{width:30px;height:30px;border-radius:50%;background:var(--cyan);display:flex;align-items:center;justify-content:center;color:#000;font-size:.7rem}
+.pc-score{position:absolute;top:4px;left:4px;background:rgba(0,0,0,.75);color:var(--gold);font-size:.6rem;font-weight:700;padding:2px 4px;border-radius:3px}
+.pc-badge{position:absolute;top:4px;right:4px;font-size:.58rem;font-weight:700;padding:2px 5px;border-radius:3px}
+.bf{background:rgba(0,188,212,.2);color:var(--cyan);border:1px solid rgba(0,188,212,.4)}
+.bt{background:rgba(233,30,140,.2);color:var(--pink);border:1px solid rgba(233,30,140,.4)}
+.pc-title{font-size:.72rem;font-weight:600;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-yr{font-size:.65rem;color:var(--muted);margin-top:1px}
+
+/* TOP10 */
+.t10{flex:0 0 90px;cursor:pointer;position:relative;padding-bottom:16px;transition:transform .2s}
+.t10:hover{transform:translateY(-4px)}
+.t10-img{width:90px;height:135px;border-radius:7px;object-fit:cover;display:block;background:var(--card)}
+.t10-ph{width:90px;height:135px;border-radius:7px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.t10-num{position:absolute;bottom:0;right:-3px;font-size:2.8rem;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.2);font-style:italic}
+.t10-score{position:absolute;top:4px;left:4px;background:rgba(0,0,0,.75);color:var(--gold);font-size:.58rem;font-weight:700;padding:2px 4px;border-radius:3px}
+
+/* ═══ DETAIL PAGE ═══ */
+#detailPage{min-height:100vh}
+.detail-hero{position:relative;width:100%;padding-top:56%;background:#000;overflow:hidden}
+.detail-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.detail-grad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(13,13,13,.5) 50%,transparent 100%)}
+.back-btn{position:absolute;top:64px;right:16px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);color:#fff;padding:7px 14px;border-radius:6px;font-family:'Vazirmatn',sans-serif;font-size:.78rem;cursor:pointer;z-index:10;backdrop-filter:blur(6px)}
+.detail-body{padding:16px}
+.detail-top{display:flex;gap:14px;margin-bottom:18px}
+.detail-poster{width:100px;height:150px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--card)}
+.detail-poster-ph{width:100px;height:150px;border-radius:8px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0}
+.detail-meta{flex:1}
+.detail-title{font-size:1.3rem;font-weight:900;line-height:1.2;margin-bottom:8px}
+.detail-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.detail-tag{background:rgba(255,255,255,.08);border:1px solid var(--border);color:rgba(255,255,255,.75);font-size:.67rem;padding:3px 8px;border-radius:4px}
+.detail-stats{display:flex;gap:12px;flex-wrap:wrap}
+.d-stat{text-align:center}
+.d-stat-n{font-size:.95rem;font-weight:800;color:var(--cyan)}
+.d-stat-l{font-size:.6rem;color:var(--muted)}
+.detail-btns{display:flex;gap:8px;margin-bottom:18px}
+.sec-title{font-size:.9rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+/* TRAILER */
+.trailer-wrap{border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/9;margin-bottom:18px}
+.trailer-wrap iframe{width:100%;height:100%;border:none;display:block}
+.no-trailer{aspect-ratio:16/9;background:var(--card);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:.82rem;margin-bottom:18px}
+
+/* OVERVIEW */
+.overview{font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:18px;background:var(--surface);border-radius:10px;padding:14px;border:1px solid var(--border)}
+
+/* CAST */
+.cast-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px}
+.cast-card{flex:0 0 75px;text-align:center;cursor:pointer}
+.cast-img{width:75px;height:75px;border-radius:50%;object-fit:cover;display:block;background:var(--card);margin-bottom:5px;border:2px solid var(--border)}
+.cast-img-ph{width:75px;height:75px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 5px;border:2px solid var(--border)}
+.cast-name{font-size:.62rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cast-char{font-size:.58rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* SIMILAR */
+.similar-row{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
 
 /* LOADING */
-.ld{display:flex;align-items:center;gap:8px;padding:20px;color:var(--muted);font-size:.82rem}
+.ld{display:flex;align-items:center;gap:8px;padding:20px;color:var(--muted);font-size:.8rem;justify-content:center}
 .sp{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* SEARCH */
+.s-ov{position:fixed;inset:0;z-index:2000;background:rgba(13,13,13,.97);display:none;flex-direction:column;align-items:center;padding-top:65px;gap:12px}
+.s-ov.open{display:flex}
+.s-box{width:92%;max-width:540px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:9px}
+.s-box input{flex:1;background:none;border:none;outline:none;color:#fff;font-family:'Vazirmatn',sans-serif;font-size:.9rem}
+.s-box input::placeholder{color:var(--muted)}
+.s-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem}
+#sRes{width:92%;max-width:540px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+
 /* FOOTER */
-footer{
-  border-top:1px solid var(--border);
-  padding:20px 24px;
-  text-align:center;
-  color:var(--muted);font-size:.75rem;line-height:2;
-}
-footer strong{
-  display:block;font-size:1rem;font-weight:900;
-  background:linear-gradient(90deg,var(--cyan),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  margin-bottom:4px;
-}
+footer{border-top:1px solid var(--border);padding:16px;text-align:center;color:var(--muted);font-size:.7rem;line-height:2}
+footer strong{display:block;font-size:.95rem;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:3px}
 
 @media(max-width:480px){
-  nav{padding:0 16px}
+  nav{padding:0 14px}
   .nav-links{display:none}
-  .hero-info{padding:20px 16px;max-width:100%}
-  .hero-title{font-size:1.5rem}
-  .sec{padding:16px}
-  .hero{padding-top:56%}
+  .hero-info{padding:16px;max-width:100%}
+  .hero-title{font-size:1.3rem}
+  .sec{padding:14px}
 }
 </style>
 </head>
@@ -263,12 +170,12 @@ footer strong{
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="logo">🎬 CinemaZone</div>
+  <div class="logo" onclick="showHome()">🎬 CinemaZone</div>
   <ul class="nav-links">
-    <li><a href="#" class="active">خانه</a></li>
-    <li><a href="#movies">فیلم‌ها</a></li>
-    <li><a href="#series">سریال‌ها</a></li>
-    <li><a href="#top10">برترین‌ها</a></li>
+    <li><a href="#" onclick="showHome()">خانه</a></li>
+    <li><a href="#">فیلم‌ها</a></li>
+    <li><a href="#">سریال‌ها</a></li>
+    <li><a href="#">برترین‌ها</a></li>
   </ul>
   <div class="nav-r">
     <button class="icon-btn" onclick="openS()">🔍</button>
@@ -276,97 +183,100 @@ footer strong{
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="hero">
-  <img class="hero-img" id="heroBg" src="" alt=""/>
-  <div class="hero-grad"></div>
-  <div class="hero-info" id="heroInfo"><div class="ld"><div class="sp"></div>بارگذاری...</div></div>
-  <div class="hero-dots" id="heroDots"></div>
-</div>
+<!-- ═══ HOME PAGE ═══ -->
+<div id="homePage" class="page active">
 
-<!-- STATS -->
-<div class="stats">
-  <div class="st"><div class="st-n">500K+</div><div class="st-l">فیلم</div></div>
-  <div class="st"><div class="st-n">100K+</div><div class="st-l">سریال</div></div>
-  <div class="st"><div class="st-n">50M+</div><div class="st-l">کاربر</div></div>
-  <div class="st"><div class="st-n">190+</div><div class="st-l">کشور</div></div>
-</div>
-
-<!-- TOP 10 -->
-<div class="sec" id="top10">
-  <div class="sec-head">
-    <div class="sec-name"><span>🔥</span><div>Top 10 این هفته<div class="sec-sub">پربیننده‌ترین در جهان</div></div></div>
-    <a href="#" class="all-link">همه ←</a>
+  <!-- HERO -->
+  <div class="hero">
+    <img class="hero-img" id="heroBg" src="" alt=""/>
+    <div class="hero-grad"></div>
+    <div class="hero-info" id="heroInfo"><div class="ld"><div class="sp"></div></div></div>
+    <div class="hero-dots" id="heroDots"></div>
   </div>
-  <div class="row" id="r10"><div class="ld"><div class="sp"></div></div></div>
-</div>
 
-<!-- TRENDING -->
-<div class="sec" id="movies" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="sec-head">
-    <div class="sec-name"><span>📈</span><div>Trending این هفته<div class="sec-sub">همه دارند می‌بینند</div></div></div>
-    <a href="#" class="all-link">همه ←</a>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="st"><div class="st-n">500K+</div><div class="st-l">فیلم</div></div>
+    <div class="st"><div class="st-n">100K+</div><div class="st-l">سریال</div></div>
+    <div class="st"><div class="st-n">50M+</div><div class="st-l">کاربر</div></div>
+    <div class="st"><div class="st-n">190+</div><div class="st-l">کشور</div></div>
   </div>
-  <div class="row" id="rTr"><div class="ld"><div class="sp"></div></div></div>
-</div>
 
-<!-- ACTION -->
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-name"><span>💥</span><div>فیلم‌های اکشن</div></div>
-    <a href="#" class="all-link">همه ←</a>
+  <div class="sec">
+    <div class="sec-head"><div class="sec-name">🔥 Top 10 این هفته</div><a href="#" class="all-link">همه ←</a></div>
+    <div class="row" id="r10"><div class="ld"><div class="sp"></div></div></div>
   </div>
-  <div class="row" id="rAc"><div class="ld"><div class="sp"></div></div></div>
-</div>
 
-<!-- SERIES -->
-<div class="sec" id="series" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="sec-head">
-    <div class="sec-name"><span>📺</span><div>سریال‌های برتر</div></div>
-    <a href="#" class="all-link">همه ←</a>
+  <div class="sec" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="sec-head"><div class="sec-name">📈 Trending این هفته</div><a href="#" class="all-link">همه ←</a></div>
+    <div class="row" id="rTr"><div class="ld"><div class="sp"></div></div></div>
   </div>
-  <div class="row" id="rSe"><div class="ld"><div class="sp"></div></div></div>
-</div>
 
-<!-- DRAMA -->
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-name"><span>🎭</span><div>درام</div></div>
-    <a href="#" class="all-link">همه ←</a>
+  <div class="sec">
+    <div class="sec-head"><div class="sec-name">💥 فیلم‌های اکشن</div><a href="#" class="all-link">همه ←</a></div>
+    <div class="row" id="rAc"><div class="ld"><div class="sp"></div></div></div>
   </div>
-  <div class="row" id="rDr"><div class="ld"><div class="sp"></div></div></div>
-</div>
 
-<!-- ANIMATION -->
-<div class="sec" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="sec-head">
-    <div class="sec-name"><span>🎨</span><div>انیمیشن</div></div>
-    <a href="#" class="all-link">همه ←</a>
+  <div class="sec" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="sec-head"><div class="sec-name">📺 سریال‌های برتر</div><a href="#" class="all-link">همه ←</a></div>
+    <div class="row" id="rSe"><div class="ld"><div class="sp"></div></div></div>
   </div>
-  <div class="row" id="rAn"><div class="ld"><div class="sp"></div></div></div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-name">🎨 انیمیشن</div><a href="#" class="all-link">همه ←</a></div>
+    <div class="row" id="rAn"><div class="ld"><div class="sp"></div></div></div>
+  </div>
+
+  <div class="sec" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="sec-head"><div class="sec-name">🎭 درام</div><a href="#" class="all-link">همه ←</a></div>
+    <div class="row" id="rDr"><div class="ld"><div class="sp"></div></div></div>
+  </div>
+
+  <footer>
+    <strong>🎬 CinemaZone</strong>
+    اطلاعات از <a href="https://themoviedb.org" style="color:var(--cyan);text-decoration:none">TMDB</a> · ساخته شده با ❤️
+  </footer>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <strong>🎬 CinemaZone</strong>
-  بهترین فیلم‌ها و سریال‌های دنیا · اطلاعات از <a href="https://themoviedb.org" style="color:var(--cyan);text-decoration:none">TMDB</a>
-</footer>
+<!-- ═══ DETAIL PAGE ═══ -->
+<div id="detailPage" class="page">
+  <div class="detail-hero">
+    <img class="detail-bg" id="detailBg" src="" alt=""/>
+    <div class="detail-grad"></div>
+    <button class="back-btn" onclick="showHome()">← برگشت</button>
+  </div>
+  <div class="detail-body">
+    <div id="detailContent"><div class="ld"><div class="sp"></div>در حال بارگذاری...</div></div>
+  </div>
+</div>
 
 <script>
 const K='8265bd1679663a7ea12ac168da84d2e8';
 const I='https://image.tmdb.org/t/p/';
 const B='https://api.themoviedb.org/3';
-const G={28:'اکشن',12:'ماجرا',16:'انیمیشن',35:'کمدی',80:'جنایی',18:'درام',14:'فانتزی',27:'ترسناک',878:'علمی‌تخیلی',53:'هیجانی',10751:'خانوادگی'};
+const G={28:'اکشن',12:'ماجرا',16:'انیمیشن',35:'کمدی',80:'جنایی',18:'درام',14:'فانتزی',27:'ترسناک',878:'علمی‌تخیلی',53:'هیجانی',10751:'خانوادگی',9648:'رمز',37:'وسترن'};
 
 async function api(u){
   const r=await fetch(B+u+(u.includes('?')?'&':'?')+'api_key='+K+'&language=fa-IR');
   return r.json();
 }
 
-// nav scroll
+// NAV scroll
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>40));
 
-// search
+// PAGES
+function showHome(){
+  document.getElementById('homePage').classList.add('active');
+  document.getElementById('detailPage').classList.remove('active');
+  window.scrollTo(0,0);
+}
+function showDetail(){
+  document.getElementById('homePage').classList.remove('active');
+  document.getElementById('detailPage').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// SEARCH
 function openS(){document.getElementById('sOv').classList.add('open');document.getElementById('sIn').focus()}
 function closeS(){document.getElementById('sOv').classList.remove('open')}
 document.getElementById('sIn').addEventListener('input',async e=>{
@@ -377,31 +287,30 @@ document.getElementById('sIn').addEventListener('input',async e=>{
     const d=await api('/search/multi?query='+encodeURIComponent(q));
     box.innerHTML=d.results.slice(0,6).map(m=>{
       const img=m.poster_path
-        ?`<img src="${I}w200${m.poster_path}" style="width:100%;height:130px;object-fit:cover;border-radius:8px;display:block">`
-        :`<div style="width:100%;height:130px;background:var(--card);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2rem">🎬</div>`;
-      return`<div style="cursor:pointer">${img}<div style="font-size:.75rem;font-weight:600;margin-top:6px">${m.title||m.name||''}</div><div style="font-size:.65rem;color:var(--muted)">${(m.release_date||m.first_air_date||'').slice(0,4)}</div></div>`;
+        ?`<img src="${I}w200${m.poster_path}" style="width:100%;height:120px;object-fit:cover;border-radius:7px;display:block">`
+        :`<div style="width:100%;height:120px;background:var(--card);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:2rem">🎬</div>`;
+      const type=m.media_type==='tv'?'tv':'movie';
+      return`<div style="cursor:pointer" onclick="closeS();openDetail(${m.id},'${type}')">${img}<div style="font-size:.72rem;font-weight:600;margin-top:5px">${m.title||m.name||''}</div><div style="font-size:.62rem;color:var(--muted)">${(m.release_date||m.first_air_date||'').slice(0,4)}</div></div>`;
     }).join('');
   }catch(e){}
 });
 
-// hero
+// HERO
 let hMovies=[];let hI=0;let hT;
 async function loadHero(){
   try{
     const d=await api('/trending/movie/week?');
     hMovies=d.results.slice(0,5);
-    // build dots
     const dots=document.getElementById('heroDots');
     dots.innerHTML=hMovies.map((_,i)=>`<div class="dot${i===0?' on':''}" onclick="showH(${i})"></div>`).join('');
     showH(0);
     hT=setInterval(()=>showH((hI+1)%hMovies.length),6000);
-  }catch(e){document.getElementById('heroInfo').innerHTML='<p style="color:var(--muted);font-size:.8rem">خطا در بارگذاری</p>'}
+  }catch(e){}
 }
 function showH(i){
   hI=i;
   const m=hMovies[i];
-  const bg=document.getElementById('heroBg');
-  if(m.backdrop_path){bg.src=I+'w1280'+m.backdrop_path;bg.style.opacity=1}
+  if(m.backdrop_path) document.getElementById('heroBg').src=I+'w1280'+m.backdrop_path;
   document.getElementById('heroInfo').innerHTML=`
     <div class="hero-badge">🔥 پرطرفدار این هفته</div>
     <div class="hero-title">${m.title||m.name}</div>
@@ -412,21 +321,19 @@ function showH(i){
     </div>
     <div class="hero-desc">${m.overview||''}</div>
     <div class="hero-btns">
-      <button class="btn-p">▶ تماشا کن</button>
-      <button class="btn-s">ℹ اطلاعات بیشتر</button>
+      <button class="btn-p" onclick="openDetail(${m.id},'movie')">▶ تماشا کن</button>
+      <button class="btn-s" onclick="openDetail(${m.id},'movie')">ℹ اطلاعات بیشتر</button>
     </div>`;
   document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===i));
 }
 
-// poster card
-function pc(m,badge='FILM'){
-  const img=m.poster_path
-    ?`<img class="pc-img" src="${I}w300${m.poster_path}" loading="lazy">`
-    :`<div class="pc-ph">🎬</div>`;
+// CARDS
+function pc(m,badge,type){
+  const t=type||(badge==='TV'?'tv':'movie');
+  const img=m.poster_path?`<img class="pc-img" src="${I}w300${m.poster_path}" loading="lazy">`:`<div class="pc-ph">🎬</div>`;
   const bc=badge==='TV'?'bt':'bf';
-  return`<div class="pc">
-    <div class="pc-wrap">
-      ${img}
+  return`<div class="pc" onclick="openDetail(${m.id},'${t}')">
+    <div class="pc-wrap">${img}
       <div class="pc-ov"><div class="pc-play">▶</div></div>
       <span class="pc-score">⭐${m.vote_average?.toFixed(1)||'—'}</span>
       <span class="pc-badge ${bc}">${badge}</span>
@@ -435,33 +342,96 @@ function pc(m,badge='FILM'){
     <div class="pc-yr">${(m.release_date||m.first_air_date||'').slice(0,4)}</div>
   </div>`;
 }
-
-// top10 card
 function t10c(m,i){
-  const img=m.poster_path
-    ?`<img class="t10-img" src="${I}w300${m.poster_path}" loading="lazy">`
-    :`<div class="t10-ph">🎬</div>`;
-  return`<div class="t10">
+  const img=m.poster_path?`<img class="t10-img" src="${I}w300${m.poster_path}" loading="lazy">`:`<div class="t10-ph">🎬</div>`;
+  return`<div class="t10" onclick="openDetail(${m.id},'movie')">
     ${img}
     <span class="t10-score">⭐${m.vote_average?.toFixed(1)||'—'}</span>
     <div class="t10-num">${i+1}</div>
   </div>`;
 }
 
-async function load(endpoint,elId,cardFn,badge){
-  try{
-    const d=await api(endpoint);
-    document.getElementById(elId).innerHTML=d.results.slice(0,12).map((m,i)=>cardFn(m,badge||i)).join('');
-  }catch(e){document.getElementById(elId).innerHTML='<p style="color:var(--muted);font-size:.8rem;padding:8px">خطا</p>'}
+async function loadRow(url,id,cardFn){
+  try{const d=await api(url);document.getElementById(id).innerHTML=d.results.slice(0,12).map(cardFn).join('')}
+  catch(e){document.getElementById(id).innerHTML='<p style="color:var(--muted);font-size:.75rem;padding:8px">خطا در بارگذاری</p>'}
 }
 
+// ═══ DETAIL PAGE ═══
+async function openDetail(id,type){
+  showDetail();
+  document.getElementById('detailContent').innerHTML='<div class="ld"><div class="sp"></div>در حال بارگذاری...</div>';
+  document.getElementById('detailBg').src='';
+  try{
+    const [info,credits,videos,similar]=await Promise.all([
+      api('/'+type+'/'+id+'?'),
+      api('/'+type+'/'+id+'/credits?'),
+      api('/'+type+'/'+id+'/videos?language=en-US'),
+      api('/'+type+'/'+id+'/similar?')
+    ]);
+
+    // backdrop
+    if(info.backdrop_path) document.getElementById('detailBg').src=I+'w1280'+info.backdrop_path;
+
+    // trailer
+    const trailer=videos.results?.find(v=>v.type==='Trailer'&&v.site==='YouTube')||videos.results?.[0];
+    const trailerHTML=trailer
+      ?`<div class="trailer-wrap"><iframe src="https://www.youtube.com/embed/${trailer.key}?autoplay=0" allowfullscreen loading="lazy"></iframe></div>`
+      :`<div class="no-trailer">🎬<span>تریلر موجود نیست</span></div>`;
+
+    // cast
+    const cast=(credits.cast||[]).slice(0,15);
+    const castHTML=cast.map(a=>{
+      const img=a.profile_path?`<img class="cast-img" src="${I}w185${a.profile_path}" loading="lazy">`:`<div class="cast-img-ph">👤</div>`;
+      return`<div class="cast-card">${img}<div class="cast-name">${a.name}</div><div class="cast-char">${a.character||''}</div></div>`;
+    }).join('');
+
+    // similar
+    const simHTML=(similar.results||[]).slice(0,10).map(m=>pc(m,'FILM',type)).join('');
+
+    // genres
+    const genres=(info.genres||[]).map(g=>`<span class="detail-tag">${g.name}</span>`).join('');
+
+    // runtime
+    const runtime=info.runtime?`${Math.floor(info.runtime/60)}h ${info.runtime%60}m`:(info.episode_run_time?.[0]?`${info.episode_run_time[0]}m`:'—');
+
+    const poster=info.poster_path?`<img class="detail-poster" src="${I}w300${info.poster_path}">`:`<div class="detail-poster-ph">🎬</div>`;
+
+    document.getElementById('detailContent').innerHTML=`
+      <div class="detail-top">
+        ${poster}
+        <div class="detail-meta">
+          <div class="detail-title">${info.title||info.name}</div>
+          <div class="detail-tags">${genres}</div>
+          <div class="detail-stats">
+            <div class="d-stat"><div class="d-stat-n">⭐ ${info.vote_average?.toFixed(1)||'—'}</div><div class="d-stat-l">امتیاز</div></div>
+            <div class="d-stat"><div class="d-stat-n">${(info.release_date||info.first_air_date||'').slice(0,4)||'—'}</div><div class="d-stat-l">سال</div></div>
+            <div class="d-stat"><div class="d-stat-n">${runtime}</div><div class="d-stat-l">مدت</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-btns">
+        <button class="btn-p">▶ تماشا کن</button>
+        <button class="btn-s">+ لیست من</button>
+      </div>
+      <div class="overview">${info.overview||'توضیحات موجود نیست.'}</div>
+      <div class="sec-title">🎬 تریلر رسمی</div>
+      ${trailerHTML}
+      ${cast.length>0?`<div class="sec-title">👥 بازیگران</div><div class="cast-row">${castHTML}</div>`:''}
+      ${simHTML?`<div class="sec-title">🎥 فیلم‌های مشابه</div><div class="similar-row">${simHTML}</div>`:''}
+    `;
+  }catch(e){
+    document.getElementById('detailContent').innerHTML='<p style="color:var(--muted);padding:20px;text-align:center">خطا در بارگذاری اطلاعات</p>';
+  }
+}
+
+// INIT
 loadHero();
-load('/trending/movie/week?','r10',(m,i)=>t10c(m,i));
-load('/trending/all/week?','rTr',(m)=>pc(m,m.media_type==='tv'?'TV':'FILM'));
-load('/discover/movie?with_genres=28&sort_by=popularity.desc','rAc',(m)=>pc(m,'FILM'));
-load('/tv/top_rated?','rSe',(m)=>pc(m,'TV'));
-load('/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=1000','rDr',(m)=>pc(m,'FILM'));
-load('/discover/movie?with_genres=16&sort_by=popularity.desc','rAn',(m)=>pc(m,'FILM'));
+loadRow('/trending/movie/week?','r10',(m,i)=>t10c(m,i));
+loadRow('/trending/all/week?','rTr',(m)=>pc(m,m.media_type==='tv'?'TV':'FILM'));
+loadRow('/discover/movie?with_genres=28&sort_by=popularity.desc','rAc',(m)=>pc(m,'FILM'));
+loadRow('/tv/top_rated?','rSe',(m)=>pc(m,'TV','tv'));
+loadRow('/discover/movie?with_genres=16&sort_by=popularity.desc','rAn',(m)=>pc(m,'FILM'));
+loadRow('/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=500','rDr',(m)=>pc(m,'FILM'));
 </script>
 </body>
 </html>
