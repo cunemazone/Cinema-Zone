@@ -137,6 +137,45 @@ nav.solid{background:rgba(13,13,13,.97);border-bottom:1px solid var(--border)}
 /* SIMILAR */
 .similar-row{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
 
+
+/* FILTER TABS */
+.filter-tabs{display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;scrollbar-width:none}
+.filter-tabs::-webkit-scrollbar{display:none}
+.ftab{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:20px;font-family:Vazirmatn,sans-serif;font-size:.75rem;cursor:pointer;white-space:nowrap;transition:all .2s}
+.ftab.on{background:var(--cyan);color:#000;border-color:var(--cyan);font-weight:700}
+
+/* WISHLIST BTN */
+.wl-btn{position:absolute;top:5px;left:5px;background:rgba(0,0,0,.7);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:.75rem;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:2}
+.wl-btn.saved{color:var(--pink)}
+
+/* RATING */
+.stars{display:flex;gap:3px;margin:8px 0}
+.star-btn{background:none;border:none;color:var(--border);font-size:1.2rem;cursor:pointer;transition:color .15s;padding:0}
+.star-btn.on{color:var(--gold)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--cyan);color:#000;padding:10px 20px;border-radius:8px;font-size:.82rem;font-weight:700;z-index:9999;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ABOUT PAGE */
+#aboutPage{min-height:100vh;padding:70px 16px 30px}
+.about-hero{text-align:center;padding:30px 0 20px}
+.about-logo{font-size:2.5rem;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.about-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.about-card h3{font-size:.9rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.about-card p{font-size:.8rem;color:var(--muted);line-height:1.7}
+
+/* SUBSCRIBE */
+.subscribe-box{background:linear-gradient(135deg,rgba(0,188,212,.1),rgba(233,30,140,.1));border:1px solid rgba(0,188,212,.3);border-radius:12px;padding:20px;margin-bottom:12px;text-align:center}
+.subscribe-box h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.subscribe-box p{font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.sub-input-row{display:flex;gap:8px}
+.sub-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:#fff;font-family:Vazirmatn,sans-serif;font-size:.82rem;outline:none}
+.sub-btn{background:var(--cyan);color:#000;border:none;padding:10px 16px;border-radius:8px;font-family:Vazirmatn,sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap}
+
+/* WISHLIST PAGE */
+#wishlistPage{min-height:100vh;padding:70px 16px 30px}
+
 /* LOADING */
 .ld{display:flex;align-items:center;gap:8px;padding:20px;color:var(--muted);font-size:.8rem;justify-content:center}
 .sp{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
@@ -183,11 +222,11 @@ footer strong{display:block;font-size:.95rem;font-weight:900;background:linear-g
     <li><a href="#" onclick="showHome()">خانه</a></li>
     <li><a href="#">فیلم‌ها</a></li>
     <li><a href="#">سریال‌ها</a></li>
-    <li><a href="#">برترین‌ها</a></li>
+    <li><a href="#">برترین‌ها</a></li><li><a href="#" onclick="showAbout()">درباره ما</a></li>
   </ul>
   <div class="nav-r">
     <button class="icon-btn" onclick="openS()">🔍</button>
-    <div class="avatar" onclick="showAdmin()">CZ</div>
+    <button class="icon-btn" onclick="showWishlist()" style="position:relative">❤️<span id="wlCount" style="position:absolute;top:-2px;left:-2px;background:var(--pink);color:#fff;font-size:.55rem;width:14px;height:14px;border-radius:50%;display:none;align-items:center;justify-content:center">0</span></button><div class="avatar" onclick="showAdmin()">CZ</div>
   </div>
 </nav>
 
@@ -340,14 +379,19 @@ function pc(m,badge,type){
   const t=type||(badge==='TV'?'tv':'movie');
   const img=m.poster_path?`<img class="pc-img" src="${I}w300${m.poster_path}" loading="lazy">`:`<div class="pc-ph">🎬</div>`;
   const bc=badge==='TV'?'bt':'bf';
+  const saved=isInWishlist(m.id);
+  const title=(m.title||m.name||'').replace(/'/g,"\'");
+  const poster=m.poster_path||'';
+  const year=(m.release_date||m.first_air_date||'').slice(0,4);
   return`<div class="pc" onclick="openDetail(${m.id},'${t}')">
     <div class="pc-wrap">${img}
       <div class="pc-ov"><div class="pc-play">▶</div></div>
       <span class="pc-score">⭐${m.vote_average?.toFixed(1)||'—'}</span>
       <span class="pc-badge ${bc}">${badge}</span>
+      <button class="wl-btn${saved?' saved':''}" data-id="${m.id}" onclick="event.stopPropagation();toggleWishlist(${m.id},'${title}','${poster}','${year}')">${saved?'❤️':'🤍'}</button>
     </div>
     <div class="pc-title">${m.title||m.name}</div>
-    <div class="pc-yr">${(m.release_date||m.first_air_date||'').slice(0,4)}</div>
+    <div class="pc-yr">${year}</div>
   </div>`;
 }
 function t10c(m,i){
@@ -424,8 +468,9 @@ async function openDetail(id,type){
       </div>
       <div class="detail-btns">
         <button class="btn-p">▶ تماشا کن</button>
-        <button class="btn-s">+ لیست من</button>
+        <button class="btn-s" onclick="toggleWishlist(info.id,info.title||info.name,info.poster_path,(info.release_date||info.first_air_date||'').slice(0,4))">❤️ لیست من</button>
       </div>
+      <div class="stars" id="starRow"></div>
       <div class="overview">${info.overview||'توضیحات موجود نیست.'}</div>
       <div class="sec-title">🎬 تریلر رسمی</div>
       ${trailerHTML}
@@ -438,6 +483,97 @@ async function openDetail(id,type){
 }
 
 
+
+
+// TOAST
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// PAGES
+function showAbout(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('aboutPage').classList.add('active');
+  window.scrollTo(0,0);
+}
+function showWishlist(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('wishlistPage').classList.add('active');
+  renderWishlist();
+  window.scrollTo(0,0);
+}
+
+// WISHLIST
+function getWishlist(){try{return JSON.parse(localStorage.getItem('wl')||'[]')}catch(e){return[]}}
+function saveWishlist(wl){localStorage.setItem('wl',JSON.stringify(wl))}
+function toggleWishlist(id,title,poster,year){
+  let wl=getWishlist();
+  const idx=wl.findIndex(m=>m.id===id);
+  if(idx>-1){wl.splice(idx,1);showToast('از لیست حذف شد')}
+  else{wl.push({id,title,poster,year});showToast('به لیست اضافه شد ❤️')}
+  saveWishlist(wl);updateWlCount();
+  document.querySelectorAll('.wl-btn[data-id="'+id+'"]').forEach(b=>{
+    b.classList.toggle('saved',idx===-1);
+    b.textContent=idx===-1?'❤️':'🤍';
+  });
+}
+function isInWishlist(id){return getWishlist().some(m=>m.id===id)}
+function updateWlCount(){
+  const wl=getWishlist();
+  const el=document.getElementById('wlCount');
+  if(wl.length>0){el.style.display='flex';el.textContent=wl.length}
+  else{el.style.display='none'}
+}
+function renderWishlist(){
+  const wl=getWishlist();
+  const grid=document.getElementById('wishlistGrid');
+  const empty=document.getElementById('wishlistEmpty');
+  if(wl.length===0){grid.innerHTML='';empty.style.display='block';return}
+  empty.style.display='none';
+  grid.innerHTML=wl.map(m=>{
+    const img=m.poster?`<img style="width:100%;height:150px;object-fit:cover;display:block" src="https://image.tmdb.org/t/p/w300${m.poster}">`:`<div style="width:100%;height:150px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:2rem">🎬</div>`;
+    return`<div style="cursor:pointer" onclick="openDetail(${m.id},'movie')">
+      <div style="border-radius:8px;overflow:hidden;position:relative">${img}
+        <button class="wl-btn saved" data-id="${m.id}" onclick="event.stopPropagation();toggleWishlist(${m.id},'${m.title}','${m.poster}','${m.year}')">❤️</button>
+      </div>
+      <div style="font-size:.72rem;font-weight:600;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.title}</div>
+      <div style="font-size:.65rem;color:var(--muted)">${m.year}</div>
+    </div>`;
+  }).join('');
+}
+
+// FILTER
+async function filterMovies(genre, btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const row=document.getElementById('rTr');
+  row.innerHTML='<div class="ld"><div class="sp"></div></div>';
+  try{
+    let url = genre==='all' ? '/trending/all/week?' : '/discover/movie?with_genres='+genre+'&sort_by=popularity.desc';
+    const d=await api(url);
+    row.innerHTML=d.results.slice(0,12).map(m=>pc(m,m.media_type==='tv'?'TV':'FILM')).join('');
+  }catch(e){}
+}
+
+// SUBSCRIBE
+function subscribe(){
+  const email=document.getElementById('subEmail').value.trim();
+  if(!email||!email.includes('@')){showToast('ایمیل معتبر وارد کن!');return}
+  showToast('ثبت شد! ممنون ❤️');
+  document.getElementById('subEmail').value='';
+}
+
+// STAR RATING
+function rateMovie(id, star){
+  localStorage.setItem('rating_'+id, star);
+  showToast('امتیاز '+star+' ⭐ ثبت شد!');
+  document.querySelectorAll('.star-btn').forEach((b,i)=>{
+    b.classList.toggle('on', i<star);
+  });
+}
+function getUserRating(id){return parseInt(localStorage.getItem('rating_'+id)||0)}
 
 // ADMIN
 const ADMIN_PASS = 'cinema2024';
@@ -483,6 +619,7 @@ function showAdmin(){
 
 // INIT
 loadHero();
+updateWlCount();
 loadRow('/trending/movie/week?','r10',(m,i)=>t10c(m,i));
 loadRow('/trending/all/week?','rTr',(m)=>pc(m,m.media_type==='tv'?'TV':'FILM'));
 loadRow('/discover/movie?with_genres=28&sort_by=popularity.desc','rAc',(m)=>pc(m,'FILM'));
@@ -546,6 +683,51 @@ loadRow('/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte
         <button onclick="adminLogout()" style="width:100%;background:rgba(255,82,82,.15);border:1px solid rgba(255,82,82,.3);color:#ff5252;padding:10px;border-radius:8px;font-family:Vazirmatn,sans-serif;font-size:.82rem;cursor:pointer">خروج</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ABOUT PAGE -->
+<div id="aboutPage" class="page">
+  <div class="about-hero">
+    <div class="about-logo">🎬 CinemaZone</div>
+    <p style="color:var(--muted);font-size:.82rem">بهترین سایت فیلم و سریال</p>
+  </div>
+  <div class="about-card">
+    <h3>🎯 درباره ما</h3>
+    <p>CinemaZone یک پلتفرم رایگان برای کشف بهترین فیلم‌ها و سریال‌های دنیا است. اطلاعات ما از پایگاه داده TMDB دریافت می‌شود.</p>
+  </div>
+  <div class="about-card">
+    <h3>✨ امکانات</h3>
+    <p>جستجوی فیلم · تریلر رسمی · بازیگران · فیلم‌های مشابه · Top 10 هفتگی · دسته‌بندی ژانر · لیست علاقه‌مندی</p>
+  </div>
+  <div class="about-card">
+    <h3>📊 آمار سایت</h3>
+    <p>اطلاعات از TMDB · بیش از ۵۰۰ هزار فیلم · ۱۹۰+ کشور</p>
+  </div>
+  <div class="subscribe-box">
+    <h3>📧 خبرنامه</h3>
+    <p>ایمیلت را وارد کن تا از جدیدترین فیلم‌ها باخبر بشی!</p>
+    <div class="sub-input-row">
+      <input class="sub-input" id="subEmail" placeholder="ایمیل خود را وارد کن..." type="email"/>
+      <button class="sub-btn" onclick="subscribe()">ثبت</button>
+    </div>
+  </div>
+  <button onclick="showHome()" style="width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:8px;font-family:Vazirmatn,sans-serif;font-size:.85rem;cursor:pointer">← برگشت</button>
+</div>
+
+<!-- WISHLIST PAGE -->
+<div id="wishlistPage" class="page">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+    <button onclick="showHome()" style="background:none;border:none;color:var(--cyan);font-size:1rem;cursor:pointer">←</button>
+    <div style="font-size:1rem;font-weight:700">❤️ لیست علاقه‌مندی‌های من</div>
+  </div>
+  <div id="wishlistGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px"></div>
+  <div id="wishlistEmpty" style="text-align:center;padding:40px;color:var(--muted);display:none">
+    <div style="font-size:3rem;margin-bottom:12px">🎬</div>
+    <div style="font-size:.85rem">هنوز فیلمی اضافه نکردی!<br>روی ❤️ هر فیلم کلیک کن</div>
   </div>
 </div>
 </body>
