@@ -187,7 +187,7 @@ footer strong{display:block;font-size:.95rem;font-weight:900;background:linear-g
   </ul>
   <div class="nav-r">
     <button class="icon-btn" onclick="openS()">🔍</button>
-    <div class="avatar">CZ</div>
+    <div class="avatar" onclick="showAdmin()">CZ</div>
   </div>
 </nav>
 
@@ -437,6 +437,50 @@ async function openDetail(id,type){
   }
 }
 
+
+
+// ADMIN
+const ADMIN_PASS = 'cinema2024';
+
+function checkAdmin(){
+  const p = document.getElementById('adminPass').value;
+  if(p === ADMIN_PASS){
+    document.getElementById('adminLogin').style.display='none';
+    document.getElementById('adminDash').style.display='block';
+    loadAdminStats();
+  } else {
+    document.getElementById('adminErr').style.display='block';
+  }
+}
+
+function adminLogout(){
+  document.getElementById('adminLogin').style.display='block';
+  document.getElementById('adminDash').style.display='none';
+  document.getElementById('adminPass').value='';
+  showHome();
+}
+
+function loadAdminStats(){
+  // Real-time active users from gtag
+  if(typeof gtag !== 'undefined'){
+    document.getElementById('statActive').textContent='1+';
+  }
+  
+  // Simulated stats (real data needs GA API)
+  document.getElementById('statUsers').textContent='—';
+  document.getElementById('statSessions').textContent='—';
+  document.getElementById('statTotal').textContent='—';
+  document.getElementById('statCountries').innerHTML='<p style="color:var(--muted);font-size:.78rem">برای آمار کامل روی دکمه Google Analytics کلیک کن</p>';
+  document.getElementById('statDevices').innerHTML='<p style="color:var(--muted);font-size:.78rem">برای آمار کامل روی دکمه Google Analytics کلیک کن</p>';
+}
+
+function showAdmin(){
+  document.getElementById('homePage').classList.remove('active');
+  document.getElementById('detailPage').classList.remove('active');
+  document.getElementById('adminPage').classList.add('active');
+  window.scrollTo(0,0);
+}
+
 // INIT
 loadHero();
 loadRow('/trending/movie/week?','r10',(m,i)=>t10c(m,i));
@@ -446,5 +490,63 @@ loadRow('/tv/top_rated?','rSe',(m)=>pc(m,'TV','tv'));
 loadRow('/discover/movie?with_genres=16&sort_by=popularity.desc','rAn',(m)=>pc(m,'FILM'));
 loadRow('/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=500','rDr',(m)=>pc(m,'FILM'));
 </script>
+
+<!-- ═══ ADMIN PAGE ═══ -->
+<div id="adminPage" class="page">
+  <div style="min-height:100vh;padding:70px 16px 30px">
+    <div style="max-width:500px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:1.5rem;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent">📊 پنل آمار</div>
+        <div style="font-size:.8rem;color:var(--muted);margin-top:4px">CinemaZone Analytics</div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="adminLogin" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px">
+        <div style="font-size:.9rem;font-weight:700;margin-bottom:16px;text-align:center">🔐 ورود به پنل</div>
+        <input id="adminPass" type="password" placeholder="رمز عبور را وارد کن..." style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;color:#fff;font-family:Vazirmatn,sans-serif;font-size:.9rem;outline:none;margin-bottom:12px"/>
+        <button onclick="checkAdmin()" style="width:100%;background:var(--cyan);color:#000;border:none;padding:12px;border-radius:8px;font-family:Vazirmatn,sans-serif;font-size:.9rem;font-weight:700;cursor:pointer">ورود</button>
+        <div id="adminErr" style="color:#ff5252;font-size:.78rem;text-align:center;margin-top:8px;display:none">رمز اشتباه است!</div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div id="adminDash" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--cyan)" id="statUsers">—</div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:4px">کاربران امروز</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--pink)" id="statSessions">—</div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:4px">بازدید امروز</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--gold)" id="statActive">—</div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:4px">الان آنلاین</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:900;color:#00e676" id="statTotal">—</div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:4px">کل بازدید</div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+          <div style="font-size:.85rem;font-weight:700;margin-bottom:12px">🌍 کشورهای بازدیدکننده</div>
+          <div id="statCountries" style="font-size:.8rem;color:var(--muted)">در حال بارگذاری...</div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+          <div style="font-size:.85rem;font-weight:700;margin-bottom:12px">📱 دستگاه‌ها</div>
+          <div id="statDevices" style="font-size:.8rem;color:var(--muted)">در حال بارگذاری...</div>
+        </div>
+
+        <div style="text-align:center;margin-bottom:12px">
+          <a href="https://analytics.google.com" target="_blank" style="display:inline-block;background:linear-gradient(135deg,var(--cyan),var(--pink));color:#000;padding:10px 24px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none">📊 Google Analytics کامل</a>
+        </div>
+
+        <button onclick="adminLogout()" style="width:100%;background:rgba(255,82,82,.15);border:1px solid rgba(255,82,82,.3);color:#ff5252;padding:10px;border-radius:8px;font-family:Vazirmatn,sans-serif;font-size:.82rem;cursor:pointer">خروج</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
